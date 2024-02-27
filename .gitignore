@@ -4,6 +4,13 @@
 # Ignore .DS_Store
 .DS_Store
 
+# Ignore .mp4 files
+.mp4
+
+# Ignore .jpeg files
+.jpeg
+.jpg
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
