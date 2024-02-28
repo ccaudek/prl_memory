@@ -185,7 +185,7 @@ def display_feedback(is_reward):
 def select_videos_for_condition(condition):
     folder = 'surprise' if condition == 'surprise' else 'no_surprise'
     prefix = 'effect' if condition == 'surprise' else 'noeffect'
-    videos_to_play = [f"{folder}/{i}_{prefix}.mov" for i in range(1, 11)]
+    videos_to_play = [f"{folder}/{prefix}_{i}.mov" for i in range(1, 11)]
     random.shuffle(videos_to_play)  # Shuffle to randomize order
     return videos_to_play
 

@@ -1,0 +1,16 @@
+Trial Number,Epoch,Stimulus Position,Key Pressed,Reaction Time,Feedback Received,Chosen Image,Most Rewarded Stimulus in Epoch,Image Left,Image Right
+1,1,Left,Left,1.2832739353179932,True,orange_old_17.jpg,Orange,orange_old_17.jpg,white_old_12.jpg
+2,1,Left,Left,0.9029769897460938,True,orange_old_14.jpg,Orange,orange_old_14.jpg,white_old_4.jpg
+3,1,Right,Right,0.7417752742767334,True,orange_old_8.jpg,Orange,white_old_15.jpg,orange_old_8.jpg
+4,1,Left,Left,0.725562334060669,True,orange_old_4.jpg,Orange,orange_old_4.jpg,white_old_13.jpg
+5,1,Left,Left,0.6402950286865234,True,orange_old_6.jpg,Orange,orange_old_6.jpg,white_old_21.jpg
+6,1,Left,Left,0.5798659324645996,True,orange_old_3.jpg,Orange,orange_old_3.jpg,white_old_20.jpg
+7,1,Right,Right,2.21972393989563,True,orange_old_16.jpg,Orange,white_old_14.jpg,orange_old_16.jpg
+8,1,Left,Right,2.289076089859009,False,white_old_25.jpg,Orange,orange_old_7.jpg,white_old_25.jpg
+9,1,Left,Right,1.7421951293945312,False,white_old_22.jpg,Orange,orange_old_12.jpg,white_old_22.jpg
+10,1,Right,Left,1.0583181381225586,True,white_old_10.jpg,Orange,white_old_10.jpg,orange_old_18.jpg
+11,1,Right,Right,1.117548942565918,True,orange_old_9.jpg,Orange,white_old_5.jpg,orange_old_9.jpg
+12,1,Right,Left,0.5817651748657227,False,white_old_9.jpg,Orange,white_old_9.jpg,orange_old_2.jpg
+13,1,Right,Right,0.9808192253112793,True,orange_old_5.jpg,Orange,white_old_1.jpg,orange_old_5.jpg
+14,1,Right,Left,0.6387901306152344,False,white_old_8.jpg,Orange,white_old_8.jpg,orange_old_20.jpg
+15,1,Right,Exit,2.926481008529663,False,orange_old_19.jpg,Orange,white_old_11.jpg,orange_old_19.jpg
