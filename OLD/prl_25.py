@@ -12,10 +12,15 @@ Mood Slider Adjustment:
 Coded Experiment Conditions:
 - Argument "A" corresponds to the "orange_rewarded_first" condition.
 - Argument "B" corresponds to the "white_rewarded_first" condition.
-These coded arguments ensure the confidentiality of experiment conditions from participants.
 
 Data File Naming:
-Each run of the script generates a uniquely named data file, incorporating a timestamp to ensure distinctiveness and traceability.
+Each run of the script generates a uniquely named data file, incorporating a timestamp to 
+ensure distinctiveness and traceability.
+
+Example:
+
+python3 prl_25.py "A" "co_ba_1999_03_23_333_f" "Y"
+python3 prl_25.py "B" "co_ba_1999_03_23_333_f" "N"
 
 Version: 1.22
 Date: 2024-03-04
@@ -34,25 +39,54 @@ from itertools import cycle
 from datetime import datetime
 
 # Check if the command line argument for condition is provided
-if len(sys.argv) < 2:
-    print("Usage: python3 prl_22.py <code>")
+if len(sys.argv) < 4:
+    print("Usage: python3 prl_22.py <code> <subject_code> <video_type>")
     print("<code> can be 'A' or 'B'")
-    sys.exit(1)  # Exit the script if the code is not provided
+    print("<video_type> can be 'Y' for S videos or 'N' for N videos")
+    sys.exit(1)  # Exit the script if the necessary arguments are not provided
+
 
 # Decode the condition based on the command line argument
 code = sys.argv[1]
+subject_code = sys.argv[2]
+video_type_arg = sys.argv[3]
+
 condition_map = {
     "A": "orange_rewarded_first",
     "B": "white_rewarded_first",
 }
 
-if code not in condition_map:
-    print("Invalid code. Please choose 'A' or 'B'.")
-    sys.exit(1)  # Exit the script if an invalid code is provided
+# Map the video type argument to the corresponding description for output file writing
+video_type_description_map = {
+    "Y": "surprise_videos",
+    "N": "not_surprising_videos",
+}
+
+if video_type_arg not in video_type_description_map:
+    print("Invalid video type. Please choose 'Y' for surprise or 'N' for no surprise.")
+    sys.exit(1)  # Exit the script if an invalid video type argument is provided
+
+# Set the video description based on the decoded value
+video_description = video_type_description_map[video_type_arg]
+
+video_type_map = {
+    "Y": "surprise",
+    "N": "nosurprise",
+}
 
 # Set the condition based on the decoded value
 condition = condition_map[code]
 
+if code not in condition_map:
+    print("Invalid code. Please choose 'A' or 'B'.")
+    sys.exit(1)  # Exit the script if an invalid code is provided
+
+if video_type_arg not in video_type_map:
+    print("Invalid video type. Please choose 'Y' for surprise or 'N' for no surprise.")
+    sys.exit(1)  # Exit the script if an invalid video type argument is provided
+
+# Set the video folder based on the decoded value
+video_folder = video_type_map[video_type_arg]
 
 # Initialize pygame and mixer
 pygame.init()
@@ -61,19 +95,11 @@ pygame.mixer.init()
 # Clock for controlling frame rate
 clock = pygame.time.Clock()
 
-# Define screen dimensions
-# screen_width = 1000
-# screen_height = 800
-
 # Set up the display to full screen
 infoObject = pygame.display.Info()
 screen_width, screen_height = infoObject.current_w, infoObject.current_h
 screen = pygame.display.set_mode((screen_width, screen_height), pygame.FULLSCREEN)
 pygame.display.set_caption("Probabilistic Learning Experiment")
-
-# Set up the display
-# screen = pygame.display.set_mode((screen_width, screen_height))
-# pygame.display.set_caption("Probabilistic Learning Experiment")
 
 # Load feedback images
 happy_img = pygame.image.load(os.path.join("feedback_imgs", "happy.png"))
@@ -94,7 +120,7 @@ response_keys = {pygame.K_f: "Left", pygame.K_j: "Right", pygame.K_ESCAPE: "Exit
 
 # Reward probabilities based on condition and epoch
 reward_probabilities = {
-    "orange_rewarded_first": [(0.9, 0.1), (0.1, 0.9)],
+    "orange_rewarded_first": [(0.9, 0.1), (0.1, 0.9)],  # 0.8, 0.2
     "white_rewarded_first": [(0.1, 0.9), (0.9, 0.1)],
 }
 
@@ -106,17 +132,17 @@ def display_mood_slider():
     )
 
     initial_value = 50  # Default start value
+    slider_rect = pygame.Rect(
+        (screen_width / 2 - 450, screen_height / 2 - 25), (900, 50)
+    )  # Center the slider
     mood_slider = pygame_gui.elements.UIHorizontalSlider(
-        pygame.Rect((50, 150), (900, 50)), initial_value, (0, 100), manager
+        slider_rect, initial_value, (0, 100), manager
     )
-    continue_button = pygame_gui.elements.UIButton(
-        pygame.Rect((screen_width / 2 - 50, 300), (100, 50)),
-        "Continue",
-        manager,
-        visible=True,
-    )
+    # Continue button is no longer needed to be visible, managed by spacebar press
+    slider_changed = False  # Track if the slider has been changed
 
     def adjust_slider_value(key):
+        nonlocal slider_changed
         current_value = mood_slider.get_current_value()
         if key in [pygame.K_d, pygame.K_k]:  # Large movement keys
             step = 10 if key == pygame.K_k else -10
@@ -126,8 +152,20 @@ def display_mood_slider():
             step = 0
         new_value = max(0, min(100, current_value + step))
         mood_slider.set_current_value(new_value)
+        if new_value != initial_value:
+            slider_changed = True  # Mark slider as changed when it moves from initial
 
     running = True
+    font = pygame.font.SysFont(None, 24)  # Adjust font size as needed
+    text_surface_left = font.render("Molto male", True, BLACK)
+    text_surface_right = font.render("Molto bene", True, BLACK)
+    text_rect_left = text_surface_left.get_rect(
+        center=(slider_rect.left - 60, slider_rect.centery)
+    )  # Adjust position
+    text_rect_right = text_surface_right.get_rect(
+        center=(slider_rect.right + 60, slider_rect.centery)
+    )  # Adjust position
+
     while running:
         time_delta = clock.tick(60) / 1000.0
         for event in pygame.event.get():
@@ -136,17 +174,18 @@ def display_mood_slider():
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     safe_exit()
-                elif (
-                    event.key == pygame.K_SPACE
-                ):  # Use spacebar to exit the slider window
+                adjust_slider_value(event.key)  # Adjust slider based on key press
+                if (
+                    event.key == pygame.K_SPACE and slider_changed
+                ):  # Check if slider changed before proceeding
                     running = False
-                else:
-                    adjust_slider_value(event.key)  # Adjust slider based on key press
 
             manager.process_events(event)
 
         manager.update(time_delta)
         screen.fill(WHITE)
+        screen.blit(text_surface_left, text_rect_left)
+        screen.blit(text_surface_right, text_rect_right)
         manager.draw_ui(screen)
         pygame.display.flip()
 
@@ -192,7 +231,12 @@ def prepare_epoch_images():
 
 
 def select_videos():
-    videos = [f"surprise/effect_{i}.mov" for i in range(1, 11)]
+    # Use the video_folder variable to determine the path
+    folder_path = video_folder
+    if folder_path == "surprise":
+        videos = [f"{folder_path}/effect_{i}.mov" for i in range(1, 11)]
+    else:  # folder_path == "nosurprise"
+        videos = [f"{folder_path}/noeffect_{i}.mov" for i in range(1, 11)]
     random.shuffle(videos)
     return cycle(videos)
 
@@ -200,7 +244,10 @@ def select_videos():
 videos_to_play = select_videos()
 
 
-def display_fixation(duration=0.5):
+def display_fixation():
+    duration = random.uniform(
+        0.25, 1.25
+    )  # Random duration between 0.25 and 1.25 seconds
     screen.fill(WHITE)
     pygame.draw.line(
         screen,
@@ -231,8 +278,9 @@ experiment_data = []  # Initialize list to store trial data
 
 
 def save_data(trial_data, filename="experiment_data.csv", mode="a"):
-    # Add "Mood Slider Value" to the list of fieldnames
+    # Extend the list of fieldnames to include "Video Type"
     fieldnames = [
+        "Subject Code",
         "Trial Number",
         "Epoch",
         "Stimulus Position",
@@ -243,18 +291,24 @@ def save_data(trial_data, filename="experiment_data.csv", mode="a"):
         "Most Rewarded Stimulus in Epoch",
         "Image Left",
         "Image Right",
-        "Mood Slider Value",  # New field for mood slider value
+        "Mood Slider Value",
+        "Video Type",  # New field for video type
     ]
     with open(filename, mode, newline="") as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         if csvfile.tell() == 0:
             writer.writeheader()  # Write the header only if the file is new
+        for data in trial_data:
+            data["Subject Code"] = subject_code  # Add subject code to each trial data
+            data["Video Type"] = (
+                video_description  # Add video type description to each trial data
+            )
         writer.writerows(trial_data)  # Write the trial data
 
 
-# New lines to include a timestamp in the filename
+# Use the provided subject_code when generating the filename for experiment data
 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-experiment_filename = f"experiment_data_{timestamp}.csv"
+experiment_filename = f"experiment_data_{subject_code}_{timestamp}.csv"
 save_data([], filename=experiment_filename, mode="w")  # Create the file with the header
 
 
