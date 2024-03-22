@@ -205,9 +205,9 @@ def check_for_exit():
 
 
 # Define a function to play sounds
-def play_sound(sound_file):
-    sound = pygame.mixer.Sound(sound_file)
-    sound.play()
+# def play_sound(sound_file):
+#     sound = pygame.mixer.Sound(sound_file)
+#     sound.play()
 
 
 def load_images(image_folder):
@@ -508,7 +508,7 @@ for epoch in range(n_epochs):
                     screen_height / 2 - happy_img.get_height() / 2,
                 ),
             )
-            play_sound("beeps/pleasant.wav")
+            # play_sound("beeps/pleasant.wav")
         else:
             screen.blit(
                 sad_img,
@@ -517,7 +517,7 @@ for epoch in range(n_epochs):
                     screen_height / 2 - sad_img.get_height() / 2,
                 ),
             )
-            play_sound("beeps/unpleasant.wav")
+            # play_sound("beeps/unpleasant.wav")
         pygame.display.flip()
         time.sleep(0.5)  # Show the feedback image for 0.5 seconds
 
