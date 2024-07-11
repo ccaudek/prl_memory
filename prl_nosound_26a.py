@@ -22,7 +22,7 @@ Example:
 python3 prl_26.py "A" "co_ba_1999_03_23_333_f" "Y" "self"
 python3 prl_26.py "B" "co_ba_1999_03_23_333_f" "N" "stranger"
 
-Version: 1.22
+Version: 1.23
 Date: 2024-03-04
 """
 
@@ -40,11 +40,11 @@ from datetime import datetime
 
 # Check if the command line argument for condition is provided
 if len(sys.argv) < 4:
-    print("Usage: python3 prl_22.py <code> <subject_code> <video_type>")
+    print("Usage: python3 prl_22.py <code> <subject_code> <video_type> <self_arg>")
     print("<code> can be 'A' or 'B'")
     print("<video_type> can be 'Y' for S videos or 'N' for N videos")
+    print("<self_arg> can be 'self' or 'stranger'")
     sys.exit(1)  # Exit the script if the necessary arguments are not provided
-
 
 # Decode the condition based on the command line argument
 code = sys.argv[1]
@@ -72,6 +72,10 @@ self_description_map = {
 if video_type_arg not in video_type_description_map:
     print("Invalid video type. Please choose 'Y' for surprise or 'N' for no surprise.")
     sys.exit(1)  # Exit the script if an invalid video type argument is provided
+
+if self_arg not in self_description_map:
+    print("Invalid self/stranger argument. Please choose 'self' or 'stranger'.")
+    sys.exit(1)  # Exit the script if an invalid self/stranger argument is provided
 
 # Set the video description based on the decoded value
 video_description = video_type_description_map[video_type_arg]
@@ -119,7 +123,6 @@ GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 
 # Define parameters
-# condition = "orange_rewarded_first"
 n_epochs = 2
 trials_per_epoch = 25
 video_trials = [0, 10, 20, 30]
@@ -301,6 +304,7 @@ def save_data(trial_data, filename="experiment_data.csv", mode="a"):
         "Mood Slider Value",
         "Video Type",  # New field for video type
         "Video File Name",
+        "Self/Stranger",  # New field for self/stranger argument
     ]
     with open(filename, mode, newline="") as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
@@ -311,6 +315,9 @@ def save_data(trial_data, filename="experiment_data.csv", mode="a"):
             data["Video Type"] = (
                 video_description  # Add video type description to each trial data
             )
+            data["Self/Stranger"] = self_description_map[
+                self_arg
+            ]  # Add self/stranger to each trial data
         writer.writerows(trial_data)  # Write the trial data
 
 
@@ -554,6 +561,9 @@ for epoch in range(n_epochs):
             "Mood Slider Value": mood_slider_value,
             "Video Type": video_description,  # Keep including video type as before
             "Video File Name": video_file_name,  # Include the video file name in the trial data
+            "Self/Stranger": self_description_map[
+                self_arg
+            ],  # Include self/stranger argument
         }
         experiment_data.append(trial_data)
 
