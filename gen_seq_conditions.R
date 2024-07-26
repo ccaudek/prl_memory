@@ -35,5 +35,6 @@ random_conditions <- get_random_conditions()
 
 # Print the commands
 for (condition in random_conditions) {
-  cat(paste("python prl_26.py", condition$first_arg, "codice_soggetto", condition$third_arg, condition$fourth_arg, "\n"))
+  cat(paste("python prl.py", condition$first_arg, "codice_soggetto", condition$third_arg, condition$fourth_arg, "\n"))
 }
+
