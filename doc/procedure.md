@@ -116,9 +116,39 @@ Ogni volta che si esegue `prl.py` con la configurazione appropriata, viene gener
 
 ## Ambiente virtuale
 
+È necessario attivare un ambiente virtuale con le appropriate librerie.
+
 ```bash
 # Create the pygame_env environment
-conda create -n pygame_env -c conda-forge python pygame opencv numpy
+conda create -n pygame_env -c conda-forge python=3.12.1 pygame opencv numpy
 # Activate the environment
 conda activate pygame_env
+# pip install pygame_gui
+pip install pygame_gui -U
 ```
+
+---
+
+## PyInstaller
+
+To generate a binary file, use the file `prl_experiment.spec` and execute
+
+```bash
+pyinstaller prl_experiment.spec
+```
+
+This will create the executable `./dist/PRL_Experiment`.
+
+To run the experiment with this binary file, use the instruction:
+
+```bash
+./dist/PRL_Experiment "A" "co_ba_1999_03_23_333_f" "Y"
+```
+
+TODO 
+
+1. So far I have used a trimmed version of the videos. Now I need to use the full-length videos.
+
+2. I need to be sure that all arguments are passed to the script, so as to be able to distinguish between the outputs of the 4 different conditions. Also I need to know the order in which the outputs had been generated.
+
+3. The images and the videos used in the 4 conditions are different. I need to understand whether I need to generate 4 different executables, and this does not requires to distribute the folders with the images and the videos, or I need to share the folders with images and videos, and to create a single executable.
