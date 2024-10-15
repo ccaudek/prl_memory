@@ -147,8 +147,10 @@ To run the experiment with this binary file, use the instruction:
 
 TODO 
 
-1. So far I have used a trimmed version of the videos. Now I need to use the full-length videos.
+1. So far I have used a trimmed version of the videos. Now I need to use the full-length videos. Done.
 
 2. I need to be sure that all arguments are passed to the script, so as to be able to distinguish between the outputs of the 4 different conditions. Also I need to know the order in which the outputs had been generated.
 
 3. The images and the videos used in the 4 conditions are different. I need to understand whether I need to generate 4 different executables, and this does not requires to distribute the folders with the images and the videos, or I need to share the folders with images and videos, and to create a single executable.
+
+4. Change the Python script so that the Excel files are all saved in the `output_data_prl_memory` directory.

@@ -30,8 +30,8 @@ Example:
 python3 prl_26.py "A" "co_ba_1999_03_23_333_f" "Y"
 python3 prl_26.py "B" "co_ba_1999_03_23_333_f" "N"
 
-Version: 1.22
-Date: 2024-03-04
+Version: 0.27
+Date: 2024-10-14
 """
 
 import pygame
@@ -48,16 +48,19 @@ from datetime import datetime
 
 # Check if the command line argument for condition is provided
 if len(sys.argv) < 4:
-    print("Usage: python3 prl_22.py <code> <subject_code> <video_type>")
+    print("Usage: python3 prl_27.py <code> <subject_code> <video_type>")
     print("<code> can be 'A' or 'B'")
     print("<video_type> can be 'Y' for S videos or 'N' for N videos")
     sys.exit(1)  # Exit the script if the necessary arguments are not provided
 
 
-# Decode the condition based on the command line argument
-code = sys.argv[1]
-subject_code = sys.argv[2]
-video_type_arg = sys.argv[3]
+# Parse command line arguments
+code = sys.argv[1]  # "A", "B", "C", "D"
+subject_code = sys.argv[2]  # subject_1, subject_2, etc.
+video_type_arg = sys.argv[3]  # Y for surprise, N for no surprise
+
+# Load the images based on the subject and condition
+orange_images, white_images = load_images(subject_code, code)
 
 condition_map = {
     "A": "orange_rewarded_first",
@@ -218,13 +221,34 @@ def play_sound(sound_file):
     sound.play()
 
 
-def load_images(image_folder):
-    image_files = [
-        f for f in os.listdir(image_folder) if f.endswith(".jpg") or f.endswith(".png")
+# Define the mapping of conditions to image ranges
+image_ranges = {
+    "A": (1, 25),  # Self/surprise: images 1-25
+    "B": (26, 50),  # Self/no-surprise: images 26-50
+    "C": (51, 75),  # Stranger/surprise: images 51-75
+    "D": (76, 100),  # Stranger/no-surprise: images 76-100
+}
+
+
+def load_images(subject_code, condition_code):
+    # Get the range of images for the given condition
+    orange_range, white_range = image_ranges[condition_code]
+
+    # Construct paths to the subject's image directories
+    orange_folder = os.path.join("images", subject_code, "orange")
+    white_folder = os.path.join("images", subject_code, "white")
+
+    # Load the appropriate range of images for orange and white
+    orange_images = [
+        pygame.image.load(os.path.join(orange_folder, f"orange_old_{i}.jpg"))
+        for i in range(orange_range[0], orange_range[1] + 1)
     ]
-    image_files.sort()
-    images = [pygame.image.load(os.path.join(image_folder, img)) for img in image_files]
-    return images, image_files
+    white_images = [
+        pygame.image.load(os.path.join(white_folder, f"white_old_{i}.jpg"))
+        for i in range(white_range[0], white_range[1] + 1)
+    ]
+
+    return orange_images, white_images
 
 
 orange_images, orange_image_files = load_images("orange")
@@ -286,9 +310,9 @@ experiment_data = []  # Initialize list to store trial data
 
 
 def save_data(trial_data, filename="experiment_data.csv", mode="a"):
-    # Extend the list of fieldnames to include "Video Type"
     fieldnames = [
         "Subject Code",
+        "Condition",  # Add condition to output
         "Trial Number",
         "Epoch",
         "Stimulus Position",
@@ -308,10 +332,9 @@ def save_data(trial_data, filename="experiment_data.csv", mode="a"):
         if csvfile.tell() == 0:
             writer.writeheader()  # Write the header only if the file is new
         for data in trial_data:
-            data["Subject Code"] = subject_code  # Add subject code to each trial data
-            data["Video Type"] = (
-                video_description  # Add video type description to each trial data
-            )
+            data["Subject Code"] = subject_code
+            data["Condition"] = condition_map[code]  # Include condition
+            data["Video Type"] = video_description  # Include video type
         writer.writerows(trial_data)  # Write the trial data
 
 

@@ -1,6 +1,0 @@
-Subject Code,Trial Number,Epoch,Stimulus Position,Key Pressed,Reaction Time,Feedback Received,Chosen Image,Most Rewarded Stimulus in Epoch,Image Left,Image Right,Mood Slider Value,Video Type,Video File Name,Self/Stranger
-co_ba_1999_03_23_333_f,1,1,Right,Right,1.4320619106292725,True,orange_old_24.jpg,Orange,white_old_21.jpg,orange_old_24.jpg,,surprise_videos,,subject_portrait
-co_ba_1999_03_23_333_f,2,1,Left,Left,0.6523942947387695,True,orange_old_3.jpg,Orange,orange_old_3.jpg,white_old_11.jpg,,surprise_videos,,subject_portrait
-co_ba_1999_03_23_333_f,3,1,Left,Left,0.6922791004180908,True,orange_old_15.jpg,Orange,orange_old_15.jpg,white_old_14.jpg,,surprise_videos,,subject_portrait
-co_ba_1999_03_23_333_f,4,1,Right,Right,0.38349294662475586,True,orange_old_8.jpg,Orange,white_old_6.jpg,orange_old_8.jpg,80,surprise_videos,,subject_portrait
-co_ba_1999_03_23_333_f,5,1,Left,Exit,0.9477341175079346,False,white_old_22.jpg,Orange,orange_old_18.jpg,white_old_22.jpg,,surprise_videos,,subject_portrait
