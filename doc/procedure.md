@@ -30,6 +30,7 @@ Questa cartella contiene quattro sottocartelle, ciascuna con 100 immagini:
     - 100 immagini per `stranger_orange`
 
     Questo porta a un totale di **400 immagini** (100 per ogni combinazione).
+    
 
 ## PRL Task
 
@@ -113,7 +114,7 @@ Ogni volta che si esegue `prl.py` con gli argomenti appropriati, viene generato 
 
 ## Ambiente virtuale
 
-È necessario attivare un ambiente virtuale con le appropriate librerie.
+Innanzitutto, è necessario creare un ambiente virtuale con le appropriate librerie.
 
 ```bash
 # Create the pygame_env environment
@@ -124,6 +125,13 @@ conda activate pygame_env
 pip install pygame_gui -U
 ```
 
+Per eseguire l'esperimento, usando il codice Python, è necessario attivare l'ambiente virtuale:
+
+```bash
+conda deactivate
+# Activate the environment
+conda activate pygame_env
+```
 
 ## Debugging
 
@@ -153,3 +161,10 @@ TODO
 1. I need to be sure that all arguments are passed to the script, so as to be able to distinguish between the outputs of the 4 different conditions. Also I need to know the order in which the outputs had been generated.
 
 2. Change the Python script so that the Excel files are all saved in the `output_data_prl_memory` directory.
+
+---
+
+```bash
+python3 prl_28.py "A" "subject_1" "Y"
+```
+

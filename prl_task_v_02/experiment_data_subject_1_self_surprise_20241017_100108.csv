@@ -1,0 +1,11 @@
+Subject Code,Condition,Trial Number,Epoch,Stimulus Position,Key Pressed,Reaction Time,Feedback Received,Chosen Image,Most Rewarded Stimulus in Epoch,Image Left,Image Right,Mood Slider Value,Video Type,Video File Name
+subject_1,self_surprise,1,1,Right,Right,3.4910061359405518,True,old_orange_img_029.png,White,old_white_img_016.png,old_orange_img_029.png,,surprise_videos,effect_8.mov
+subject_1,self_surprise,2,1,Left,Left,1.1737580299377441,True,old_orange_img_014.png,White,old_orange_img_014.png,old_white_img_038.png,,surprise_videos,
+subject_1,self_surprise,3,1,Left,Left,0.7311229705810547,True,old_orange_img_041.png,White,old_orange_img_041.png,old_white_img_023.png,,surprise_videos,
+subject_1,self_surprise,4,1,Right,Right,0.7863359451293945,True,old_orange_img_043.png,White,old_white_img_030.png,old_orange_img_043.png,80,surprise_videos,
+subject_1,self_surprise,5,1,Left,Left,1.132068157196045,True,old_orange_img_045.png,White,old_orange_img_045.png,old_white_img_004.png,,surprise_videos,
+subject_1,self_surprise,6,1,Right,Right,0.6934189796447754,True,old_orange_img_015.png,White,old_white_img_047.png,old_orange_img_015.png,,surprise_videos,
+subject_1,self_surprise,7,1,Right,Left,2.3751962184906006,False,old_white_img_022.png,White,old_white_img_022.png,old_orange_img_005.png,,surprise_videos,
+subject_1,self_surprise,8,1,Right,Right,0.7571611404418945,True,old_orange_img_050.png,White,old_white_img_050.png,old_orange_img_050.png,70,surprise_videos,
+subject_1,self_surprise,9,1,Left,Left,1.1945481300354004,True,old_orange_img_038.png,White,old_orange_img_038.png,old_white_img_037.png,,surprise_videos,
+subject_1,self_surprise,10,1,Right,Right,0.6300389766693115,True,old_orange_img_012.png,White,old_white_img_015.png,old_orange_img_012.png,,surprise_videos,

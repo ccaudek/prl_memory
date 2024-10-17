@@ -79,6 +79,39 @@ video_type_description_map = {"Y": "surprise_videos", "N": "not_surprising_video
 video_description = video_type_description_map[video_type_arg]
 
 
+# Define the mapping of conditions to image ranges
+image_ranges = {
+    "A": (1, 50),  # Self/surprise: images 1-50
+    "B": (51, 100),  # Self/no-surprise: images 51-100
+    "C": (1, 50),  # Stranger/surprise: images 1-50
+    "D": (51, 100),  # Stranger/no-surprise: images 51-100
+}
+
+
+def load_images(subject_code, condition_code):
+    # Get the range of images for the given condition
+    start, end = image_ranges[condition_code]  # Unpack the tuple directly
+
+    # Construct paths to the subject's image directories
+    orange_folder = os.path.join("images", subject_code, "old_orange")
+    white_folder = os.path.join("images", subject_code, "old_white")
+
+    # Load the appropriate range of images for orange and white
+    orange_images = [
+        pygame.image.load(os.path.join(orange_folder, f"old_orange_img_{i:03}.png"))
+        for i in range(start, end + 1)
+    ]
+    white_images = [
+        pygame.image.load(os.path.join(white_folder, f"old_white_img_{i:03}.png"))
+        for i in range(start, end + 1)
+    ]
+
+    orange_image_files = [f"old_orange_img_{i:03}.png" for i in range(start, end + 1)]
+    white_image_files = [f"old_white_img_{i:03}.png" for i in range(start, end + 1)]
+
+    return orange_images, white_images, orange_image_files, white_image_files
+
+
 # Load the images based on the subject and condition
 orange_images, white_images, orange_image_files, white_image_files = load_images(
     subject_code, code
@@ -140,8 +173,10 @@ response_keys = {pygame.K_f: "Left", pygame.K_j: "Right", pygame.K_ESCAPE: "Exit
 
 # Reward probabilities based on condition and epoch
 reward_probabilities = {
-    "orange_rewarded_first": [(0.9, 0.1), (0.1, 0.9)],  # 0.8, 0.2
-    "white_rewarded_first": [(0.1, 0.9), (0.9, 0.1)],
+    "self_surprise": [(0.9, 0.1), (0.1, 0.9)],  # was "orange_rewarded_first"
+    "self_no_surprise": [(0.1, 0.9), (0.9, 0.1)],  # was "white_rewarded_first"
+    "stranger_surprise": [(0.9, 0.1), (0.1, 0.9)],  # similar to self_surprise
+    "stranger_no_surprise": [(0.1, 0.9), (0.9, 0.1)],  # similar to self_no_surprise
 }
 
 
@@ -228,44 +263,6 @@ def check_for_exit():
 def play_sound(sound_file):
     sound = pygame.mixer.Sound(sound_file)
     sound.play()
-
-
-# Define the mapping of conditions to image ranges
-image_ranges = {
-    "A": (1, 25),  # Self/surprise: images 1-25
-    "B": (26, 50),  # Self/no-surprise: images 26-50
-    "C": (51, 75),  # Stranger/surprise: images 51-75
-    "D": (76, 100),  # Stranger/no-surprise: images 76-100
-}
-
-
-def load_images(subject_code, condition_code):
-    # Get the range of images for the given condition
-    orange_range, white_range = image_ranges[condition_code]
-
-    # Construct paths to the subject's image directories
-    orange_folder = os.path.join("images", subject_code, "old_orange")
-    white_folder = os.path.join("images", subject_code, "old_white")
-
-    # Load the appropriate range of images for orange and white
-    orange_images = [
-        pygame.image.load(os.path.join(orange_folder, f"old_orange_img_{i:03}.png"))
-        for i in range(orange_range[0], orange_range[1] + 1)
-    ]
-    white_images = [
-        pygame.image.load(os.path.join(white_folder, f"old_white_img_{i:03}.png"))
-        for i in range(white_range[0], white_range[1] + 1)
-    ]
-
-    orange_image_files = [
-        f"old_orange_img_{i:03}.png"
-        for i in range(orange_range[0], orange_range[1] + 1)
-    ]
-    white_image_files = [
-        f"old_white_img_{i:03}.png" for i in range(white_range[0], white_range[1] + 1)
-    ]
-
-    return orange_images, white_images, orange_image_files, white_image_files
 
 
 def prepare_epoch_images(
