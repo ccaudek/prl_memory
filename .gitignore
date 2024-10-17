@@ -1,6 +1,3 @@
-# Ignore .mov files
-*.mov
-
 # Ignore .DS_Store
 .DS_Store
 
