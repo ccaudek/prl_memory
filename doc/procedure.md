@@ -1,24 +1,28 @@
 # PRL e Memoria
 
-Versione: Fri Oct 11 13:00:35 CEST 2024
+Versione: Thu Oct 17 09:09:08 CEST 2024
 
 ---
 
 Questo documento descrive la procedura sperimentale per il progetto PRL e memoria, distinguendo tra la generazione degli stimoli, l'organizzazione dei materiali per il compito di PRL e l'organizzazione dei materiali per il compito di memoria.
 
-## Creazione degli Stimoli
+## Creazione degli Stimoli per ciascun soggetto
 
 La prima fase consiste nella generazione degli stimoli specifici per ciascun soggetto.
 
-1. **Cartella di generazione delle immagini:** Per ogni soggetto, si crea una cartella denominata `nome_cognome_images` (es. `mario_rossi`, utilizzando solo lettere minuscole). Questa cartella contiene quattro sottocartelle, ciascuna con 100 immagini:
+1. **Cartella _images_:** Per ogni soggetto, si crea una cartella il cui nome corrisponde al codice del soggetto. Per esempio, `ma_ro_1999_03_06_312_m`.
+
+TODO Per adesso, la cartella di ciascun soggetto è chiamata `subject_1`, `subject_2`, ...
+
+Questa cartella contiene quattro sottocartelle, ciascuna con 100 immagini:
    - `self_orange` (self_orange_1.jpg, ..., self_orange_100.jpg)
    - `self_white` (self_white_1.jpg, ..., self_white_100.jpg)
    - `stranger_orange` (stranger_orange_1.jpg, ..., stranger_orange_100.jpg)
    - `stranger_white` (stranger_white_1.jpg, ..., stranger_white_100.jpg)
 
-   Le immagini sono generate utilizzando lo script `script_collage_img.py` e le immagini di partenza `background_orange.png` e `background_white.png`. Una volta completata la generazione, le immagini sono posizionate nelle cartelle appropriate.
+   Le immagini sono generate utilizzando lo script `collage/script_collage_img.py` e le immagini di partenza, specifiche per ciascun soggetto, sono chiamate `collage/background_orange.png` e `collage/background_white.png`. Una volta completata la generazione, le immagini sono spostate manualmente nelle cartelle appropriate (`ma_ro_1999_03_06_312_m/self_orange`, ecc.).
 
-    È necessario generare un totale di **100 immagini per ciascuna combinazione**, quindi:
+    È necessario generare un totale di **100 immagini per ciascuna delle 4 conditioni, per ciascun soggetto**, quindi:
 
     - 100 immagini per `self_white`
     - 100 immagini per `self_orange`
@@ -29,19 +33,21 @@ La prima fase consiste nella generazione degli stimoli specifici per ciascun sog
 
 ## PRL Task
 
-2. **Cartella per il compito PRL:** Per ogni soggetto, si crea una cartella separata denominata `nome_cognome_prl`, che contiene lo script `prl.py` e quattro sottocartelle:
+2. **Cartella per il compito PRL:** Per ogni soggetto, si crea una cartella separata denominata `images/subject_code` (es., `images/ma_ro_1999_03_06_312_m`), che contiene quattro sottocartelle:
    - `self_orange`
    - `self_white`
    - `stranger_orange`
    - `stranger_white`
 
-   In ciascuna di queste cartelle si copiano 50 immagini "old" selezionate dalle cartelle di generazione delle immagini:
-   - Nella cartella `self_orange`, si utilizzano le immagini 1-50 da `nome_cognome_images/self_orange`.
-   - Nella cartella `self_white`, si utilizzano le immagini 1-50 da `nome_cognome_images/self_white`.
-   - Nella cartella `stranger_orange`, si utilizzano le immagini 1-50 da `nome_cognome_images/stranger_orange`.
-   - Nella cartella `stranger_white`, si utilizzano le immagini 1-50 da `nome_cognome_images/stranger_white`.
+   Nella cartella `images/subject_code` di ciascun soggetto si spostano le 4 cartelle con 100 immagini ciascuna che sono state create in precedenza (`collage/output_folder`).
 
-   La sequenza delle sessioni PRL viene determinata utilizzando lo script `gen_seq_conditions.R`. Lo script `prl.py` è eseguito con stringhe simili alle seguenti:
+   La cartella del progetto contiene anche lo script Python per eseguire l'esperimento, `prl.py`.
+
+   Quando si eseguo l'eseprimento, la sequenza delle sessioni PRL viene determinata utilizzando lo script `gen_seq_conditions.R`. 
+   
+   Lo script `prl.py` è eseguito con stringhe simili alle seguenti: 
+   
+   TODO check the arguments!
 
    ```bash
    python3 prl.py "A" "co_ba_1999_03_23_333_f" "Y" "self"
@@ -103,16 +109,7 @@ Le immagini sono posizionate a destra e a sinistra del punto di fissazione, dist
 
 ## Struttura delle Sessioni
 
-Nella sequenza delle quattro sessioni:
-
-- **Prima sessione `self`**: Si utilizzano le immagini 1-50 dalle cartelle `nome_cognome_images/self_white` e `nome_cognome_images/self_orange`.
-- **Seconda sessione `self`**: Si utilizzano le immagini 51-100 delle stesse cartelle `self_white` e `self_orange`.
-- **Prima sessione `stranger`**: Si utilizzano le immagini 1-50 dalle cartelle `nome_cognome_images/stranger_white` e `nome_cognome_images/stranger_orange`.
-- **Seconda sessione `stranger`**: Si utilizzano le immagini 51-100 delle stesse cartelle `stranger_white` e `stranger_orange`.
-
-In totale, sono sufficienti **100 immagini per ciascuna combinazione** (self/stranger e white/orange), per un totale di 400 immagini.
-
-Ogni volta che si esegue `prl.py` con la configurazione appropriata, viene generato un file Excel che contiene i risultati del partecipante per quella condizione specifica.
+Ogni volta che si esegue `prl.py` con gli argomenti appropriati, viene generato un file CSV che contiene i risultati del partecipante per quella condizione. Ogni partecipante deve generare 4 file.
 
 ## Ambiente virtuale
 
@@ -126,6 +123,12 @@ conda activate pygame_env
 # pip install pygame_gui
 pip install pygame_gui -U
 ```
+
+
+## Debugging
+
+For debugging, use a trimmed version of the videos.
+
 
 ---
 
@@ -147,10 +150,6 @@ To run the experiment with this binary file, use the instruction:
 
 TODO 
 
-1. So far I have used a trimmed version of the videos. Now I need to use the full-length videos. Done.
+1. I need to be sure that all arguments are passed to the script, so as to be able to distinguish between the outputs of the 4 different conditions. Also I need to know the order in which the outputs had been generated.
 
-2. I need to be sure that all arguments are passed to the script, so as to be able to distinguish between the outputs of the 4 different conditions. Also I need to know the order in which the outputs had been generated.
-
-3. The images and the videos used in the 4 conditions are different. I need to understand whether I need to generate 4 different executables, and this does not requires to distribute the folders with the images and the videos, or I need to share the folders with images and videos, and to create a single executable.
-
-4. Change the Python script so that the Excel files are all saved in the `output_data_prl_memory` directory.
+2. Change the Python script so that the Excel files are all saved in the `output_data_prl_memory` directory.
