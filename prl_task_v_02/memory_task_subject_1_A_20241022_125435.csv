@@ -1,0 +1,19 @@
+Trial Number,Old Image,New Image,Old Image Side,Key Pressed,Correct,Reaction Time,Condition,Timestamp
+1,old_white_img_037.png,new_white_img_001.png,left,left,True,1.72247314453125,A,2024-10-22 12:54:39
+2,old_orange_img_047.png,new_orange_img_019.png,right,left,False,1.2337000370025635,A,2024-10-22 12:54:41
+3,old_white_img_016.png,new_white_img_050.png,left,left,True,1.3319480419158936,A,2024-10-22 12:54:44
+4,old_orange_img_048.png,new_orange_img_018.png,right,left,False,1.4771652221679688,A,2024-10-22 12:54:46
+5,old_orange_img_030.png,new_orange_img_041.png,left,right,False,1.3243589401245117,A,2024-10-22 12:54:49
+6,old_white_img_025.png,new_white_img_023.png,left,right,False,1.773941993713379,A,2024-10-22 12:54:52
+7,old_orange_img_032.png,new_orange_img_008.png,left,left,True,0.9575982093811035,A,2024-10-22 12:54:54
+8,old_white_img_012.png,new_white_img_040.png,right,right,True,1.664722204208374,A,2024-10-22 12:54:57
+9,old_orange_img_006.png,new_orange_img_044.png,right,right,True,1.4236218929290771,A,2024-10-22 12:55:00
+10,old_white_img_034.png,new_white_img_041.png,left,right,False,1.395354986190796,A,2024-10-22 12:55:03
+11,old_white_img_011.png,new_white_img_038.png,right,left,False,1.5464210510253906,A,2024-10-22 12:55:06
+12,old_orange_img_012.png,new_orange_img_014.png,right,left,False,1.7653799057006836,A,2024-10-22 12:55:09
+13,old_orange_img_019.png,new_orange_img_047.png,left,right,False,1.4563491344451904,A,2024-10-22 12:55:11
+14,old_orange_img_045.png,new_orange_img_032.png,left,left,True,1.4741320610046387,A,2024-10-22 12:55:14
+15,old_white_img_048.png,new_white_img_011.png,left,right,False,2.7362780570983887,A,2024-10-22 12:55:18
+16,old_orange_img_037.png,new_orange_img_026.png,left,left,True,1.2643508911132812,A,2024-10-22 12:55:21
+17,old_white_img_002.png,new_white_img_003.png,left,right,False,2.192862033843994,A,2024-10-22 12:55:24
+18,old_orange_img_049.png,new_orange_img_034.png,right,left,False,1.441241979598999,A,2024-10-22 12:55:27
