@@ -8,14 +8,25 @@ Questo documento descrive la procedura sperimentale per il progetto PRL e memori
 
 ## Project structure
 
-In this project, two tasks will be run by each subject, each in 4 different conditions:
+In this project, two tasks will be run by each subject
 
 1. a probabilistic reversal learning task, with videos, and mood ratings;
 2. an old/new memory task.
 
+each in 4 different conditions:
+
+- self surprise
+- self no-surprise
+- stranger surprise
+- stranger no-surprise
+
+The project folder contains the Python script, called prl_29.py and a folder called "images". 
+In the images folder, there are two folders for each participant. For example, subject_1_self and subject_1_stranger.
+The folder subject_1_self, for example, contains 4 folders: old_orange, old_white, new_orange, new_white.
+
 ```bash
 project/
-├── prl_28.py
+├── prl_29.py
 └── images/
     ├── subject_1_self/
     │   ├── old_orange/     # 100 images (001-100)
@@ -29,37 +40,34 @@ project/
         └── new_white/      # 100 images (001-100)
 ```
 
-The project folder contains the Python script, called prl_28.py and a folder called "images". In the images folder, there are two folders for each participant. For example, subject_1_self and subject_1_stranger.
+Each of these 4 folders has 100 images. For example, the folder new_orange has images new_orange_img_001.jpg, ..., new_orange_img_100.jpg. 
+Similarly the other 3 folders.
 
-The folder subject_1_self, for example, contains 4 folders: old_orange, old_white, new_orange, new_white.
-Each of these 4 folders has 100 images. For example, the folder new_orange has images new_orange_img_001.jpg, ..., new_orange_img_100.jpg. Similarly the other 3 folders.
+The folder subject_1_stranger, has the same structure. 
+It contains 4 folders: old_orange, old_white, new_orange, new_white. 
+Each of these 4 folders has 100 images. 
+For example, the folder new_orange has images new_orange_img_001.jpg, ..., new_orange_img_100.jpg. Similarly the other 3 folders.
 
-The folder subject_1_stranger, has the same structure. It contains 4 folders: old_orange, old_white, new_orange, new_white. Each of these 4 folders has 100 images. For example, the folder new_orange has images new_orange_img_001.jpg, ..., new_orange_img_100.jpg. Similarly the other 3 folders.
+The images in the subject_1_self folder and those of the subject_1_stranger are different. 
+They differ because a different background is used for each of them.
 
-The images in the subject_1_self folder and those of the subject_1_stranger are different. They differ because a different background is used for each of them.
+The other subjects will also have two folders each, with the same structure as above.
 
-The other subjects will have also two folders each, with the same structure as above.
+## PRL Task
 
-I need 50 unique white images and 50 unique orange images for the "surprise" condition, and 50 unique white images and 50 unique orange images for the "no-surprise" condition. In each trial of a session (having 50 trials) two images are shown: a white and an orange image.
+For each partipant, I need 50 unique white images and 50 unique orange images for the "surprise" condition, and 50 unique white images and 50 unique orange images for the "no-surprise" condition. 
+In each trial of a session (having 50 trials) two images are shown: a white and an orange image.
 
-In the Python script, the conditions is determined as follows:
 
-image_ranges = {
-    "A": (1, 50),  # Self/surprise: images 1-50 from the "old" subject_1_self folder
-    "B": (51, 100),  # Self/no-surprise: images 51-100 from the "old" subject_1_self folder
-    "C": (1, 50),  # Stranger/surprise: images 1-50 from the "old" subject_1_stranger folder
-    "D": (51, 100),  # Stranger/no-surprise: images 51-100 from the "old" subject_1_stranger folder
-}
-
-When running the script, I use one of these 4 options to deterine which condition will be run.
-
-So, with the argument "A" I will run the Self/surprise condition, with white and orange "old" images indiced from 1 to 50; with the argument "B" I will run the Self/no-surprise condition, with white and orange images indiced from 51 to 100; with the argument "C" I will run the Stranger/surprise condition, with white and orange images indiced from 1 to 50; and so on.
+## Memory task
 
 The images in the "new" folders are used in another task: an old/new memory task that will be run immediately after each session of the PRL task.
 
 ## Creazione degli Stimoli per ciascun soggetto
 
-Prima di somministrare i due compiti ai soggetti è necessario generare gli stimoli che verranno usati. Una dimensione che viene considerata nel progetto è l'impatto dell'informazione autoriferita sull'esecuzione del compito. Il secondo aspetto è il ruolo della sorpresa.
+Prima di somministrare i due compiti ai soggetti è necessario generare gli stimoli che verranno usati. Gli stimoli sono specifici per ciascun soggetto in quanto sono generati usando, come sfondo, l'immagine del soggetto (con background bianco o arancione), su cui sono "incollate" le immagini degli oggetti selezionati dal database di Cooper, P.S., Colton, E., Bode, S. et al. (2023).
+
+Una domanda della ricerca è l'impatto dell'informazione auto-riferita sull'esecuzione del compito PRL. La seconda domanda riguard il ruolo della sorpresa, sia nella prestazione del compito PRL, sia nella prestazione del compito di memoria.
 
 La prima fase consiste nella generazione degli stimoli specifici per ciascun soggetto.
 
@@ -89,11 +97,11 @@ Questa cartella contiene quattro sottocartelle, ciascuna con 100 immagini:
 
 ### 1. **Design**
 
-Lo script Python genera un compito di apprendimento probabilistico con inversione (probabilistic reversal learning), che include video e valutazioni del mood.
+Lo script Python genera un compito di apprendimento probabilistico con inversione (probabilistic reversal learning). Inframmezzate alle prove PRL ci sono la presentazione di video e uno slider per la valutazioni del mood istantaneo.
 
 Ci sono **4 condizioni** per ciascun soggetto, che variano in base a due fattori: la presenza o assenza di sorpresa e il tipo di informazione (auto-riferita o etero-riferita). Ogni soggetto completa 4 sessioni, una per ciascuna condizione.
 
-Oltre a queste 4 condizioni, c'è una variabile aggiuntiva che viene determinata casualmente per ciascun soggetto, ma non aumenta il numero di condizioni. Questa variabile stabilisce se l'immagine arancione viene premiata con una probabilità maggiore rispetto a quella bianca nella prima epoca (prima del reversal). Il valore di questa variabile viene determinato casualmente con lo script R `gen_seq_conditions.R`.
+Oltre a queste 4 condizioni, c'è una variabile aggiuntiva che viene determinata casualmente per ciascun soggetto, ma non aumenta il numero di condizioni. Questa variabile stabilisce se l'immagine con sfondo arancione viene premiata con una probabilità maggiore rispetto a quella con sfondo bianco nella prima epoca (i.e., nelle prime 25 prove, ovvero prima del reversal). Il valore di questa variabile viene determinato casualmente con lo script R `gen_seq_conditions.R`.
 
 Per ogni soggetto, vengono create due cartelle denominate `images/subject_code_self` (esempio: `images/ma_ro_1999_03_06_312_m_self`) e `images/subject_code_stranger`. Ciascuna di queste due cartelle contiene quattro sottocartelle:
 
@@ -108,9 +116,7 @@ Nella cartella `images/subject_code_stranger` di ciascun soggetto vengono sposta
 
 La struttura di cartelle è replicata per ogni soggetto, che avrà due cartelle (self e stranger), ciascuna con 4 sottocartelle contenenti le immagini.
 
-Lo script Python `prl.py` gestisce l'esperimento e utilizza lo script R `gen_seq_conditions.R` per determinare la sequenza delle sessioni PRL.
-
-Le immagini nella cartella `subject_1_self` e quelle nella cartella `subject_1_stranger` sono differenti, poiché usano sfondi diversi.
+Lo script Python `prl_29.py` gestisce l'esperimento. Lo sperimentatore utilizza lo script R `gen_seq_conditions.R` per determinare la sequenza delle sessioni PRL.
 
 Ogni sessione include 50 immagini bianche e 50 immagini arancioni per le condizioni "sorpresa" e "no-sorpresa". In ciascun trial di una sessione (50 trial), vengono mostrate una immagine bianca e una arancione.
 
@@ -138,10 +144,10 @@ image_ranges = {
 }
 ```
 
-Inoltre, è necessario specificare la variabile `orange_first`, che determina quale immagine viene premiata maggiormente nella prima epoca.
+Inoltre, è necessario specificare la variabile `orange_first`, che determina quale immagine viene premiata con probabilità maggiore nella prima epoca (prove 1-25).
 
-- Se `orange_first` è True, le probabilità di ricompensa saranno `[(0.9, 0.1), (0.1, 0.9)]` (arancione premiata nella prima epoca).
-- Se `orange_first` è False, le probabilità saranno `[(0.1, 0.9), (0.9, 0.1)]` (bianca premiata nella prima epoca).
+- Se `orange_first` è True, le probabilità di ricompensa saranno `[(0.8, 0.2), (0.2, 0.8)]` (arancione premiata nella prima epoca).
+- Se `orange_first` è False, le probabilità saranno `[(0.2, 0.8), (0.8, 0.2)]` (bianca premiata nella prima epoca).
 
 La variabile `orange_first` viene determinata tramite un argomento passato nella riga di comando:
 
@@ -150,10 +156,10 @@ La variabile `orange_first` viene determinata tramite un argomento passato nella
 
 ### 3. **Esecuzione dello Script**
 
-Per eseguire lo script Python, ad esempio:
+Per eseguire lo script Python, usiamo la sequente stringa, ad esempio:
 
 ```bash
-python3 prl.py "subject_1" "B" "T"
+python3 prl_29.py "subject_1" "B" "T"
 ```
 
 - Il primo argomento, `"subject_1"`, specifica il codice del soggetto, che viene usato per selezionare le cartelle con le immagini (`subject_1_self` o `subject_1_stranger`).
